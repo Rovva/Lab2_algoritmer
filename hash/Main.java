@@ -7,9 +7,21 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		NumberGenerator num = new NumberGenerator(7);
-		int arraySize = 6;
+		int arraySize = 1000;
+		NumberGenerator num = new NumberGenerator(arraySize);
 		Probe_1 One = new Probe_1(arraySize, num);
+		System.out.println(num.unsorted);
+		
+		
+		for(int i = 0; i < arraySize; i++) {
+			
+			One.insert((int) num.unsorted.get(i));
+			
+			
+			
+		}
+		One.getHash();
+		
 
 	}
 
