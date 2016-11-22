@@ -1,27 +1,74 @@
 package hash;
 
 import hash.NumberGenerator;
-import hash.Probe_1;
+
+import java.util.Arrays;
+
+import hash.HashProbe;
 
 public class Main {
 
 	public static void main(String[] args) {
 		
-		int arraySize = 1000;
+		long time;
+		long startTime;
+		int arraySize = 10;
+		int c = 7;
+		
+		
 		NumberGenerator num = new NumberGenerator(arraySize);
-		Probe_1 One = new Probe_1(arraySize, num);
+		HashProbe One = new HashProbe(arraySize, num, c);
 		System.out.println(num.unsorted);
 		
+		//INSERTION
 		
+		startTime = System.nanoTime();
 		for(int i = 0; i < arraySize; i++) {
 			
 			One.insert((int) num.unsorted.get(i));
-			
-			
+
+		}
+		time = (long) ((System.nanoTime() - startTime));
+		System.out.println(time + " ns");
+		
+		One.getHash();
+		One.clearHash();
+		System.out.println("");
+		
+		
+		
+		//INSERTION 1
+		
+		startTime = System.nanoTime();
+		
+		for(int i = 0; i < arraySize; i++) {
+			One.insert1((int) num.unsorted.get(i));
+
+		}
+		
+		time = (long) ((System.nanoTime() - startTime));
+		System.out.println(time + " ns");
+		
+		One.getHash();
+		One.clearHash();
+		System.out.println("");
+		
+		//INSERTION 2
+		
+		startTime = System.nanoTime();
+		
+		for(int i = 0; i < arraySize; i++) {
+			One.getHash();	
+			System.out.println("");
+			One.insert2((int) num.unsorted.get(i));
 			
 		}
-		One.getHash();
 		
+		time = (long) ((System.nanoTime() - startTime));
+		System.out.println(time + " ns");
+		
+		One.getHash();
+		One.clearHash();
 
 	}
 
