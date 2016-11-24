@@ -12,7 +12,7 @@ public class HashProbe {
 	int up;
 	int down;
 	int c;
-	int reHash;
+	int [] lastRehash;
 	
 	public HashProbe(int x, NumberGenerator num, int c) {
 		this.num = num;
@@ -21,7 +21,7 @@ public class HashProbe {
 		up = 0;
 		down = 0;
 		this.c = c;
-		this.reHash = 0;
+		this.lastRehash = new int[1];
 
 	}
 	
@@ -109,16 +109,17 @@ public class HashProbe {
 						System.out.println("I AM IN THE FOR LOOP HOHOH");
 						
 						int y = HashTable[a];
-						if (Math.abs(j - hash(y)) <= c ){
-							System.out.println("SWITCHING a:" + HashTable[a] + " with j:" + HashTable[j]);
+						if (y != 0 && Math.abs(j - hash(y)) <= c ){
+							System.out.println("SWITCHING a:" + HashTable[a] + " with j:" + x);
 							HashTable[j] = y;
 							HashTable[a] = x;
 							return;
 						}						
 						
 					}
-					if(reHash > 1){
-						reHash(HashTable);
+					if(Arrays.equals(lastRehash, HashTable) == false){
+						lastRehash = reHash(HashTable);
+						continue;
 					} else {
 						System.out.println("ReHasing fail!");
 						return;
@@ -138,8 +139,7 @@ public class HashProbe {
 		
 	}
 	
-	public void reHash(int[] OldHashTable){
-		reHash++; 
+	public int[] reHash(int[] OldHashTable){
 		
 		System.out.println("REHASHING!!!!!!!!");
 		
@@ -154,9 +154,7 @@ public class HashProbe {
 			}
 			
 		}
-		
-		
-		
+		return Old;
 	}
 	
 	public int hash(int x) {
