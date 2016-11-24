@@ -12,6 +12,7 @@ public class HashProbe {
 	int up;
 	int down;
 	int c;
+	int reHash;
 	
 	public HashProbe(int x, NumberGenerator num, int c) {
 		this.num = num;
@@ -20,6 +21,7 @@ public class HashProbe {
 		up = 0;
 		down = 0;
 		this.c = c;
+		this.reHash = 0;
 
 	}
 	
@@ -115,8 +117,13 @@ public class HashProbe {
 						}						
 						
 					}
+					if(reHash > 1){
+						reHash(HashTable);
+					} else {
+						System.out.println("ReHasing fail!");
+						return;
+					}
 					
-					reHash(HashTable);
 
 					
 				}
@@ -132,6 +139,7 @@ public class HashProbe {
 	}
 	
 	public void reHash(int[] OldHashTable){
+		reHash++; 
 		
 		System.out.println("REHASHING!!!!!!!!");
 		
@@ -142,7 +150,7 @@ public class HashProbe {
 		for(int i = 0; i < arraySize; i++) {
 			
 			if (Old[i] != 0){
-				insert2(i);
+				insert2(Old[i]);
 			}
 			
 		}

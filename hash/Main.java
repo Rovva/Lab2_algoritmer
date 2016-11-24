@@ -12,8 +12,8 @@ public class Main {
 		
 		long time;
 		long startTime;
-		int arraySize = 10;
-		int c = 7;
+		int arraySize = 100;
+		int c = 10;
 		
 		
 		NumberGenerator num = new NumberGenerator(arraySize);
@@ -34,7 +34,6 @@ public class Main {
 		One.getHash();
 		One.clearHash();
 		System.out.println("");
-		
 		
 		
 		//INSERTION 1
@@ -58,8 +57,8 @@ public class Main {
 		startTime = System.nanoTime();
 		
 		for(int i = 0; i < arraySize; i++) {
-			One.getHash();	
-			System.out.println("");
+			//One.getHash();	
+			//System.out.println("");
 			One.insert2((int) num.unsorted.get(i));
 			
 		}
@@ -69,7 +68,7 @@ public class Main {
 		
 		One.getHash();
 		One.clearHash();
-
+		
 	}
 
 }
