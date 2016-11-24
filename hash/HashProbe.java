@@ -14,6 +14,17 @@ public class HashProbe {
 	int c;
 	int [] lastRehash;
 	
+	public double checkLoad() {
+		double load = 0.0;
+		for(int i = 0; i < arraySize; i++) {
+			if(HashTable[i] != 0) {
+				load++;
+			}
+		}
+		load = load / arraySize;
+		return load;
+	}
+	
 	public HashProbe(int x, NumberGenerator num, int c) {
 		this.num = num;
 		this.arraySize = x;
@@ -51,7 +62,6 @@ public class HashProbe {
 		int i = 0;
 		int v;
 		while (i != arraySize){
-			
 
 			if (down <= up){
 				v = hash(x + i);
@@ -80,12 +90,7 @@ public class HashProbe {
 			} else {
 				i++;
 			}
-			
-			
 		}
-		
-		
-		
 	}
 	
 	public void insert2(int x){

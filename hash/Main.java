@@ -65,7 +65,7 @@ public class Main {
 		
 		time = (long) ((System.nanoTime() - startTime));
 		System.out.println(time + " ns");
-		
+		System.out.println("Load: " + (One.checkLoad() * 100) + "%");
 		One.getHash();
 		One.clearHash();
 		
