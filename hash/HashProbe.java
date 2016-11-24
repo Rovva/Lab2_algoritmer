@@ -13,17 +13,11 @@ public class HashProbe {
 	int down;
 	int c;
 	int [] lastRehash;
-	
-	public double checkLoad() {
-		double load = 0.0;
-		for(int i = 0; i < arraySize; i++) {
-			if(HashTable[i] != 0) {
-				load++;
-			}
-		}
-		load = load / arraySize;
-		return load;
-	}
+	int nrRehash;
+	int loadFactor;
+	int nrInsertcollision;
+	int longestChain;
+	int currentChain;
 	
 	public HashProbe(int x, NumberGenerator num, int c) {
 		this.num = num;
@@ -33,6 +27,7 @@ public class HashProbe {
 		down = 0;
 		this.c = c;
 		this.lastRehash = new int[1];
+		this.nrRehash = 0;
 
 	}
 	
@@ -45,7 +40,7 @@ public class HashProbe {
 			
 			if (HashTable[v] == 0){
 				HashTable[v] = x;
-				return;
+				break;
 				
 			} else {
 				
@@ -53,6 +48,16 @@ public class HashProbe {
 				
 			}
 			
+		}
+		if(i > 0){
+			currentChain++;
+			nrInsertcollision++;
+		} else {
+			if(currentChain > longestChain){
+				int diff = currentChain - longestChain;
+				longestChain += diff; 
+			}
+			currentChain = 0;
 		}
 		
 	}
@@ -62,6 +67,7 @@ public class HashProbe {
 		int i = 0;
 		int v;
 		while (i != arraySize){
+			
 
 			if (down <= up){
 				v = hash(x + i);
@@ -76,21 +82,36 @@ public class HashProbe {
 				if (i != 0 && down <= up) {
 					
 					down++;
-					return;
+					break;
 					
 				} else if (i != 0 && down > up) {
 					
 					up++;
-					return;
+					break;
 					
 				}
-				return;
+				break;
 				
 			
 			} else {
 				i++;
 			}
+			
+			
 		}
+		if(i > 0){
+			currentChain++;
+			nrInsertcollision++;
+		} else {
+			if(currentChain > longestChain){
+				int diff = currentChain - longestChain;
+				longestChain += diff;
+			}
+			currentChain = 0;
+		}
+		
+		
+		
 	}
 	
 	public void insert2(int x){
@@ -105,7 +126,7 @@ public class HashProbe {
 				
 				if (Math.abs(j - hash(x)) <= c){
 					HashTable[j] = x;
-					return;
+					break;
 				} else {
 
 					
@@ -118,7 +139,7 @@ public class HashProbe {
 							System.out.println("SWITCHING a:" + HashTable[a] + " with j:" + x);
 							HashTable[j] = y;
 							HashTable[a] = x;
-							return;
+							break;
 						}						
 						
 					}
@@ -127,7 +148,7 @@ public class HashProbe {
 						continue;
 					} else {
 						System.out.println("ReHasing fail!");
-						return;
+						break;
 					}
 					
 
@@ -141,6 +162,18 @@ public class HashProbe {
 			}
 			
 		}
+		if(i > 0){
+			currentChain++;
+			nrInsertcollision++;
+		} else {
+			if(currentChain > longestChain){
+				int diff = currentChain - longestChain;
+				longestChain += diff;
+				
+			}
+			currentChain = 0;
+		}
+		
 		
 	}
 	
@@ -159,6 +192,7 @@ public class HashProbe {
 			}
 			
 		}
+		nrRehash++;
 		return Old;
 	}
 	
@@ -175,11 +209,24 @@ public class HashProbe {
 			System.out.print(HashTable[i] + ", ");
 		}
 		System.out.print("]");
+		System.out.println("Load factor = " + loadFactor);
+		System.out.println("C = " + c);
+		System.out.println("Number of rehash = " + nrRehash);
+		System.out.println("Number of insert with collision = " + nrInsertcollision);
+		System.out.println("Longest collision chain = " + longestChain);
 	}
 	
 	public void clearHash(){
 		
 		this.HashTable = new int[arraySize];
+		this.up = 0;
+		this.down = 0;
+		this.lastRehash = new int[1];
+		this.nrRehash = 0;
+		this.loadFactor = 0;
+		this.nrInsertcollision = 0;
+		this.longestChain = 0;
+	    this.currentChain = 0;
 		
 	}
 
