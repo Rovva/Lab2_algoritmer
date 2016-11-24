@@ -229,5 +229,16 @@ public class HashProbe {
 	    this.currentChain = 0;
 		
 	}
+	
+	public double checkLoad() {
+		double load = 0.0;
+		for(int i = 0; i < arraySize; i++) {
+			if(HashTable[i] != 0) {
+				load++;
+			}
+		}
+		load = load / arraySize;
+		return load;
+	}
 
 }
