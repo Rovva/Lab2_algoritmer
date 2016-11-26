@@ -19,7 +19,7 @@ public class NumberGenerator {
 		int randomNumber;
 		Random randomGenerator = new Random();
 		for(int i = 0; i < this.num; i++) {				
-			randomNumber = randomGenerator.nextInt(100) + 1;
+			randomNumber = randomGenerator.nextInt(1000) + 1;
 			unsorted.add(randomNumber);
 			unsorted2.add(randomNumber);
 		}

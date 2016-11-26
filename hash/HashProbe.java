@@ -35,7 +35,7 @@ public class HashProbe {
 	}
 	
 	public void insert(int x){
-	
+		
 		int i = 0;
 		while (i != arraySize){
 			
@@ -66,6 +66,7 @@ public class HashProbe {
 	}
 	
 	public void insert1(int x) {
+		
 		
 		int i = 0;
 		int v;
@@ -118,6 +119,7 @@ public class HashProbe {
 	}
 	
 	public void insert1_2(int x) {
+		
 
 		int up = 0;
 		int down = 0;
@@ -190,6 +192,7 @@ public class HashProbe {
 	}
 	
 	public void insert2(int x){
+
 		
 		int i = 0;
 		int j = 0;

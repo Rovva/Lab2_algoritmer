@@ -14,11 +14,11 @@ public class Main {
 		long time;
 		long startTime;
 
-		int c = 500;
-		int t = 10;
-		
-		for(int u = 1000; u <= 10000; u += 1000){
 
+		int t = 2;
+		
+		for(int u = 500; u <= 10000; u += 500){
+			int c = u;
 			long tottime = 0;
 			long tottime1 = 0;
 			long tottime1_2 = 0;
@@ -37,7 +37,7 @@ public class Main {
 			int totchain1 = 0;
 			int totchain1_2 = 0;
 			int totchain2 = 0;
-			int arraySize = u;
+			int arraySize = 10000;
 			
 			System.out.println("");
 			System.out.println("-----------");
@@ -56,6 +56,7 @@ public class Main {
 		HashProbe One = new HashProbe(arraySize, num, c);
 		//System.out.println(num.unsorted);
 		
+		/*
 		//INSERTION
 		
 		startTime = System.nanoTime();
@@ -138,7 +139,7 @@ public class Main {
 				
 				
 				
-		
+		*/
 		//INSERTION 2
 		
 		startTime = System.nanoTime();
@@ -165,6 +166,7 @@ public class Main {
 		One.clearHash();
 
 		}
+		/*
 		System.out.println("-----------");
 		System.out.println("Insert");
 		System.out.println("-----------");
@@ -191,7 +193,7 @@ public class Main {
 		System.out.println("Average Number of collisions: " + (totcollision1_2 / t));
 		System.out.println("Average longest chain: " + (totchain1_2 / t));
 		System.out.println("");
-		
+		*/
 		System.out.println("-----------");
 		System.out.println("Insert2");
 		System.out.println("-----------");
