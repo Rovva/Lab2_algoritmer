@@ -17,7 +17,7 @@ public class Main {
 
 		int t = 2;
 		
-		for(int u = 500; u <= 10000; u += 500){
+		for(int u = 500; u <= 500; u += 500){
 			int c = u;
 			long tottime = 0;
 			long tottime1 = 0;
@@ -47,13 +47,42 @@ public class Main {
 			System.out.println("");
 
 		
+			//test insert1.3
+			NumberGenerator num = new NumberGenerator(arraySize);
+			HashProbe One = new HashProbe(arraySize, num, c);
 		
+			System.out.println("INSERTION 1.3");
+			
+			startTime = System.nanoTime();
+			
+			for(int i = 0; i < arraySize; i++) {
+				One.insert1_3((int) num.unsorted.get(i));
+
+			}
+			
+			time = (long) ((System.nanoTime() - startTime));
+			System.out.println(time/1000000 + " ms");
+			System.out.println(time/1000 + " micro s");
+			System.out.println(time + " ns");
+			One.getHash();
+		
+			System.out.println();
+			
+			One.clearHash();
+			
+			System.out.println("-------------");
+			
+			
+			
+		
+			
+			
 
 		for (int k = 0; k < t; k++){
 			
 		
-		NumberGenerator num = new NumberGenerator(arraySize);
-		HashProbe One = new HashProbe(arraySize, num, c);
+		//NumberGenerator num = new NumberGenerator(arraySize);
+		//HashProbe One = new HashProbe(arraySize, num, c);
 		//System.out.println(num.unsorted);
 		
 		/*
@@ -141,7 +170,7 @@ public class Main {
 				
 		*/
 		//INSERTION 2
-		
+		/*
 		startTime = System.nanoTime();
 		
 		for(int i = 0; i < arraySize; i++) {
@@ -165,7 +194,7 @@ public class Main {
 		//One.getHash();
 		One.clearHash();
 
-		}
+		}*/
 		/*
 		System.out.println("-----------");
 		System.out.println("Insert");
@@ -193,7 +222,7 @@ public class Main {
 		System.out.println("Average Number of collisions: " + (totcollision1_2 / t));
 		System.out.println("Average longest chain: " + (totchain1_2 / t));
 		System.out.println("");
-		*/
+		
 		System.out.println("-----------");
 		System.out.println("Insert2");
 		System.out.println("-----------");
@@ -203,10 +232,11 @@ public class Main {
 		System.out.println("Average longest chain: " + (totchain2 / t));
 		System.out.println("Average loadfactor: " + (totfact / t)*100 + "%");
 		System.out.println("Average Number of ReHash: " + (totrehash / t));
-		
+		*/
 		
 		}
 		
 	}
 
+}
 }

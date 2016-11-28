@@ -19,6 +19,8 @@ public class HashProbe {
 	int longestChain;
 	int currentChain;
 	int probes;
+	int [] lDown;
+	int [] lUp;
 	
 	public HashProbe(int x, NumberGenerator num, int c) {
 		this.num = num;
@@ -31,6 +33,8 @@ public class HashProbe {
 		this.nrRehash = 0;
 		this.down1 = 0;
 		this.up1 = 0;
+		lDown = new int [arraySize];
+		lUp = new int [arraySize];
 
 	}
 	
@@ -169,6 +173,57 @@ public class HashProbe {
 				statusTable[v] = "ok";
 				break;
 				
+			
+			} else {
+				i++;
+			}
+			
+			
+		}
+		if(i > 0){
+			currentChain = i;
+			nrInsertcollision++;
+			probes += i;
+			
+			if(currentChain > longestChain){
+				longestChain = currentChain;
+			}
+
+		}
+		
+		
+		
+	}
+	
+public void insert1_3(int x) {
+		int down = 0;
+		int up = 0;
+		int i = 0;
+		int v = hash(x);
+		int hx = hash(x);
+		while (i != arraySize){
+			
+			if (i == 1){
+				down = lDown[hx];
+				up = lUp[hx];
+				if(down <= up){
+					lDown[hx]++;
+				} else {
+					lUp[hx]++;
+				}
+			}
+			
+			if(down <= up){
+				v = hash(x + i);
+			} else {
+				v = hash(x - i);
+			}
+			
+			
+			if (HashTable[v] == 0){
+				
+				HashTable[v] = x;
+				break;
 			
 			} else {
 				i++;
