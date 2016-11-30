@@ -308,7 +308,7 @@ public void insert1_3(int x) {
 						
 					//}
 					
-					if(Arrays.equals(lastRehash, HashTable) == false){
+					if(curRehash < 10 && Arrays.equals(lastRehash, HashTable) == false){
 						
 						this.lastRehash = reHash(HashTable);
 						break;
@@ -370,15 +370,91 @@ public void insert1_3(int x) {
 							//System.out.println("SWITCHING a:" + HashTable[a] + " with j:" + x);
 							HashTable[a] = x;
 							
-							if(curRehash < 2){
+							if(curRehash < 10){
 								nrRehash++;
 								curRehash++;
 								insert2_2(y);
 								break;
 							}
-							
-							
+													
 						}						
+							
+					}
+					
+					break;
+					
+				}
+				
+			} else {
+				
+				i++;
+				
+			}
+			
+		}
+		
+		if(i > 0){
+			currentChain = i;
+			nrInsertcollision++;
+			probes += i;
+			
+			if(currentChain > longestChain){
+				longestChain = currentChain;
+			}
+
+		}
+		
+		
+	}
+	
+	public void insert2_3(int x){
+
+		int i = 0;
+		int j = 0;
+		while (i != arraySize){
+			
+			j = hash(x + i);
+			
+			if (HashTable[j] == 0){
+					
+				
+				if (Math.abs(j - hash(x)) <= c){
+					HashTable[j] = x;
+					break;
+
+				} else {
+
+						
+					for(int a = hash(x); a <= hash(x + c); a++){
+							
+						//System.out.println("I AM IN THE FOR LOOP HOHOH");
+							
+						int y = HashTable[a];
+						if (y != 0 && Math.abs(j - hash(y)) <= c ){
+							//System.out.println("SWITCHING a:" + HashTable[a] + " with j:" + x);
+							HashTable[a] = x;
+							
+							if(curRehash < 10){
+								nrRehash++;
+								curRehash++;
+								insert2_2(y);
+								break;
+							}
+													
+						} else {
+							
+							if(curRehash < 10 && Arrays.equals(lastRehash, HashTable) == false){
+								
+								this.lastRehash = reHash(HashTable);
+								break;
+							} else {
+								//System.out.println("ReHashing fail!");
+								break;
+							}
+							
+							
+							
+						}
 							
 					}
 					
@@ -412,6 +488,7 @@ public void insert1_3(int x) {
 		
 		//System.out.println("REHASHING!!!!!!!!");
 		//getHash();
+		curRehash++;
 		
 		int[] Old = Arrays.copyOf(OldHashTable, OldHashTable.length);
 		
@@ -424,12 +501,12 @@ public void insert1_3(int x) {
 			}
 			
 		}
+		
 		nrRehash++;
 		return Old;
 	}
 	
 	public int hash(int x) {
-		
 		return Math.floorMod(x, arraySize);
 		
 		
