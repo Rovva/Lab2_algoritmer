@@ -15,29 +15,33 @@ public class Main {
 		long startTime;
 
 
-		int t = 2;
+		int t = 10;
 		
-		for(int u = 500; u <= 500; u += 500){
+		for(int u = 2; u <= 100; u += 2){
 			int c = u;
 			long tottime = 0;
 			long tottime1 = 0;
 			long tottime1_2 = 0;
+			long tottime1_3 = 0;
 			long tottime2 = 0;
 			double totfact = 0;
 			int totprobe = 0;
 			int totprobe1 = 0;
 			int totprobe1_2 = 0;
+			int totprobe1_3 = 0;
 			int totprobe2 = 0;
 			int totrehash = 0;
 			int totcollision = 0;
 			int totcollision1 = 0;
 			int totcollision1_2 = 0;
+			int totcollision1_3 = 0;
 			int totcollision2 = 0;
 			int totchain = 0;
 			int totchain1 = 0;
 			int totchain1_2 = 0;
+			int totchain1_3 = 0;
 			int totchain2 = 0;
-			int arraySize = 10000;
+			int arraySize = 100000;
 			
 			System.out.println("");
 			System.out.println("-----------");
@@ -47,47 +51,17 @@ public class Main {
 			System.out.println("");
 
 		
-			//test insert1.3
-			NumberGenerator num = new NumberGenerator(arraySize);
-			HashProbe One = new HashProbe(arraySize, num, c);
-		
-			System.out.println("INSERTION 1.3");
-			
-			startTime = System.nanoTime();
-			
-			for(int i = 0; i < arraySize; i++) {
-				One.insert1_3((int) num.unsorted.get(i));
-
-			}
-			
-			time = (long) ((System.nanoTime() - startTime));
-			System.out.println(time/1000000 + " ms");
-			System.out.println(time/1000 + " micro s");
-			System.out.println(time + " ns");
-			One.getHash();
-		
-			System.out.println();
-			
-			One.clearHash();
-			
-			System.out.println("-------------");
-			
-			
-			
-		
-			
-			
 
 		for (int k = 0; k < t; k++){
 			
 		
-		//NumberGenerator num = new NumberGenerator(arraySize);
-		//HashProbe One = new HashProbe(arraySize, num, c);
+		NumberGenerator num = new NumberGenerator(arraySize);
+		HashProbe One = new HashProbe(arraySize, num, c);
 		//System.out.println(num.unsorted);
 		
-		/*
-		//INSERTION
 		
+		//INSERTION
+		/*
 		startTime = System.nanoTime();
 		for(int i = 0; i < arraySize; i++) {
 			
@@ -109,7 +83,7 @@ public class Main {
 
 		//System.out.println("-------------");
 		
-		
+		/*
 		//INSERTION 1
 		
 		startTime = System.nanoTime();
@@ -164,11 +138,44 @@ public class Main {
 				
 				One.clearHash();
 				
+				//System.out.println("-------------");	
+		
+		
+		//INSERTION 1.3
+		
+				startTime = System.nanoTime();
+				
+				for(int i = 0; i < arraySize; i++) {
+					One.insert1_3((int) num.unsorted.get(i));
+
+				}
+				
+				time = (long) ((System.nanoTime() - startTime));
+				//System.out.println(time + " ns");
+				tottime1_3 += time;
+				
+
+				totprobe1_3 += One.probes;
+				totcollision1_3 += One.nrInsertcollision;
+				totchain1_3 += One.longestChain;
+				
+				//One.getHash();
+
+				//System.out.print("[");
+				
+				//for(int i = 0; i < arraySize; i++) {
+					//System.out.print(One.statusTable[i] + ", ");
+				//}
+
+				//System.out.print("]");
+				//System.out.println();
+				
+				One.clearHash();
+				
 				//System.out.println("-------------");
 				
-				
-				
 		*/
+		
 		//INSERTION 2
 		/*
 		startTime = System.nanoTime();
@@ -194,17 +201,45 @@ public class Main {
 		//One.getHash();
 		One.clearHash();
 
-		}*/
+		}
+		*/
+		//INSERTION 2.2
+		
+			startTime = System.nanoTime();
+			
+			for(int i = 0; i < arraySize; i++) {
+				//One.getHash();	
+				//System.out.println("");
+				One.insert2_2((int) num.unsorted.get(i));
+				One.curRehash = 0;
+					
+			}
+				
+			time = (long) ((System.nanoTime() - startTime));
+			//System.out.println(time + " ns");
+			tottime2 += time;
+				
+			totfact += One.checkLoad();
+			totrehash += One.nrRehash;
+			totprobe2 += One.probes;
+			totcollision2 += One.nrInsertcollision;
+			totchain2 += One.longestChain;
+				
+			//System.out.println("Load: " + (One.checkLoad() * 100) + "%");
+			//One.getHash();
+			One.clearHash();
+
+			}
 		/*
 		System.out.println("-----------");
 		System.out.println("Insert");
 		System.out.println("-----------");
-		System.out.println("Average time: " + (tottime / t)/1000000 + " milli seconds");
+		System.out.println("Average time: " + (tottime / t)/1000000.0 + " milli seconds");
 		System.out.println("Average Number of probes: " + (totprobe / t));
 		System.out.println("Average Number of collisions: " + (totcollision / t));
 		System.out.println("Average longest chain: " + (totchain / t));
 		System.out.println("");
-		
+		/*
 		System.out.println("-----------");
 		System.out.println("Insert1");
 		System.out.println("-----------");
@@ -223,20 +258,30 @@ public class Main {
 		System.out.println("Average longest chain: " + (totchain1_2 / t));
 		System.out.println("");
 		
+		
+		System.out.println("-----------");
+		System.out.println("Insert1.3");
+		System.out.println("-----------");
+		System.out.println("Average time1_3: " + (tottime1_3 /t)/1000000.0  + " milli seconds");
+		System.out.println("Average Number of probes: " + (totprobe1_3 / t));
+		System.out.println("Average Number of collisions: " + (totcollision1_3 / t));
+		System.out.println("Average longest chain: " + (totchain1_3 / t));
+		System.out.println("");
+		*/
+		
 		System.out.println("-----------");
 		System.out.println("Insert2");
 		System.out.println("-----------");
-		System.out.println("Average time2: " + (tottime2 / t)/1000000  + " milli seconds");
+		System.out.println("Average time2: " + (tottime2 / t)/1000000.0  + " milli seconds");
 		System.out.println("Average Number of probes: " + (totprobe2 / t));
 		System.out.println("Average Number of collisions: " + (totcollision2 / t));
 		System.out.println("Average longest chain: " + (totchain2 / t));
 		System.out.println("Average loadfactor: " + (totfact / t)*100 + "%");
 		System.out.println("Average Number of ReHash: " + (totrehash / t));
-		*/
+		
 		
 		}
 		
 	}
 
-}
 }

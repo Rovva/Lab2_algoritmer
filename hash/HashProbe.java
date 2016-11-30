@@ -15,6 +15,7 @@ public class HashProbe {
 	int c;
 	int [] lastRehash;
 	int nrRehash;
+	int curRehash;
 	int nrInsertcollision;
 	int longestChain;
 	int currentChain;
@@ -31,6 +32,7 @@ public class HashProbe {
 		this.c = c;
 		this.lastRehash = new int[1];
 		this.nrRehash = 0;
+		this.curRehash = 0;
 		this.down1 = 0;
 		this.up1 = 0;
 		lDown = new int [arraySize];
@@ -248,7 +250,6 @@ public void insert1_3(int x) {
 	
 	public void insert2(int x){
 
-		
 		int i = 0;
 		int j = 0;
 		while (i != arraySize){
@@ -256,31 +257,63 @@ public void insert1_3(int x) {
 			j = hash(x + i);
 			
 			if (HashTable[j] == 0){
+					
 				
 				if (Math.abs(j - hash(x)) <= c){
 					HashTable[j] = x;
 					break;
+
 				} else {
 
+					/*if(hash(x) > hash(x + c)){
+						int a = hash(x);
+						int z = arraySize;
+						
+						for(int h = 0; h < 2; h++){
+							
+			
+							for(int b = a; b < z; b++){
+							
+								//System.out.println("I AM IN THE FOR LOOP HOHOH");
+							
+								int y = HashTable[b];
+								if (y != 0 && Math.abs(j - hash(y)) <= c ){
+									//System.out.println("SWITCHING a:" + HashTable[a] + " with j:" + x);
+									HashTable[j] = y;
+									HashTable[b] = x;
+									break;
+								}	
+								
+							
+							}
+							a = 0;
+							z = hash(x + c);
+						}
+						
+					}*/ //else {
+						
+						for(int a = hash(x); a <= hash(x + c); a++){
+							
+							//System.out.println("I AM IN THE FOR LOOP HOHOH");
+							
+							int y = HashTable[a];
+							if (y != 0 && Math.abs(j - hash(y)) <= c ){
+								//System.out.println("SWITCHING a:" + HashTable[a] + " with j:" + x);
+								HashTable[j] = y;
+								HashTable[a] = x;
+								break;
+							}						
+							
+						}
+						
+					//}
 					
-					for(int a = hash(x); a <= hash(x + c); a++){
-						
-						//System.out.println("I AM IN THE FOR LOOP HOHOH");
-						
-						int y = HashTable[a];
-						if (y != 0 && Math.abs(j - hash(y)) <= c ){
-							//System.out.println("SWITCHING a:" + HashTable[a] + " with j:" + x);
-							HashTable[j] = y;
-							HashTable[a] = x;
-							break;
-						}						
-						
-					}
 					if(Arrays.equals(lastRehash, HashTable) == false){
-						lastRehash = reHash(HashTable);
-						continue;
+						
+						this.lastRehash = reHash(HashTable);
+						break;
 					} else {
-						//System.out.println("ReHasing fail!");
+						//System.out.println("ReHashing fail!");
 						break;
 					}
 					
@@ -310,9 +343,75 @@ public void insert1_3(int x) {
 		
 	}
 	
+	public void insert2_2(int x){
+
+		int i = 0;
+		int j = 0;
+		while (i != arraySize){
+			
+			j = hash(x + i);
+			
+			if (HashTable[j] == 0){
+					
+				
+				if (Math.abs(j - hash(x)) <= c){
+					HashTable[j] = x;
+					break;
+
+				} else {
+
+						
+					for(int a = hash(x); a <= hash(x + c); a++){
+							
+						//System.out.println("I AM IN THE FOR LOOP HOHOH");
+							
+						int y = HashTable[a];
+						if (y != 0 && Math.abs(j - hash(y)) <= c ){
+							//System.out.println("SWITCHING a:" + HashTable[a] + " with j:" + x);
+							HashTable[a] = x;
+							
+							if(curRehash < 2){
+								nrRehash++;
+								curRehash++;
+								insert2_2(y);
+								break;
+							}
+							
+							
+						}						
+							
+					}
+					
+					break;
+					
+				}
+				
+			} else {
+				
+				i++;
+				
+			}
+			
+		}
+		
+		if(i > 0){
+			currentChain = i;
+			nrInsertcollision++;
+			probes += i;
+			
+			if(currentChain > longestChain){
+				longestChain = currentChain;
+			}
+
+		}
+		
+		
+	}
+	
 	public int[] reHash(int[] OldHashTable){
 		
 		//System.out.println("REHASHING!!!!!!!!");
+		//getHash();
 		
 		int[] Old = Arrays.copyOf(OldHashTable, OldHashTable.length);
 		
